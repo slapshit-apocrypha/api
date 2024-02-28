@@ -8,6 +8,7 @@ import (
 
 	"github.com/diamondburned/arikawa/v3/api/webhook"
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/cors"
 	"github.com/zikaeroh/ctxlog"
 	"go.uber.org/zap"
 )
@@ -50,6 +51,11 @@ func (s *Server) Run(ctx context.Context) error {
 	r.Use(recoverer)
 	r.Use(injectLogger(logger))
 	r.Use(requestLogger)
+
+	if s.debug {
+		handler := cors.AllowAll()
+		r.Use(handler.Handler)
+	}
 
 	r.Post("/dj/application", s.postSendWebhook)
 	r.NotFound(func(w http.ResponseWriter, r *http.Request) {

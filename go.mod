@@ -13,6 +13,7 @@ require (
 
 require (
 	github.com/ajg/form v1.5.1 // indirect
+	github.com/go-chi/cors v1.2.1 // indirect
 	github.com/gorilla/schema v1.2.0 // indirect
 	go.uber.org/multierr v1.10.0 // indirect
 )
