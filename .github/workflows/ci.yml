@@ -35,8 +35,8 @@ jobs:
       run: docker build --file Dockerfile --tag api:latest .
     
     - name: Push to GitHub
-     if: ${{ github.repository == 'slapshit-apocrypha/api' && github.event_name == 'push' && github.ref == 'refs/heads/trunk'}}
-     run: |
-      echo '${{ secrets.GITHUB_TOKEN }}' | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
-      docker tag api:latest ghcr.io/slapshit-apocrypha/api:latest
-      docker push ghcr.io/slapshit-apocrypha/api:latest
+      if: ${{ github.repository == 'slapshit-apocrypha/api' && github.event_name == 'push' && github.ref == 'refs/heads/trunk'}}
+      run: |
+        echo '${{ secrets.GITHUB_TOKEN }}' | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
+        docker tag api:latest ghcr.io/slapshit-apocrypha/api:latest
+        docker push ghcr.io/slapshit-apocrypha/api:latest
