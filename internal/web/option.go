@@ -18,3 +18,10 @@ func WithWebhook(hook *webhook.Client) Option {
 		s.webhookClient = hook
 	}
 }
+
+// WithDebug enables debug mode on a server.
+func WithDebug() Option {
+	return func(s *Server) {
+		s.debug = true
+	}
+}

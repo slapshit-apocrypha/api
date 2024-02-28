@@ -20,6 +20,7 @@ const (
 type Server struct {
 	addr          string
 	webhookClient *webhook.Client
+	debug         bool
 }
 
 // New creates a new server.
@@ -45,9 +46,10 @@ func New(opts ...Option) (*Server, error) {
 func (s *Server) Run(ctx context.Context) error {
 	r := chi.NewMux()
 
-	r.Use(recoverer)
 	logger := ctxlog.FromContext(ctx)
-	r.Use(requestLogger(logger))
+	r.Use(recoverer)
+	r.Use(injectLogger(logger))
+	r.Use(requestLogger)
 
 	r.Post("/dj/application", s.postSendWebhook)
 	r.NotFound(func(w http.ResponseWriter, r *http.Request) {

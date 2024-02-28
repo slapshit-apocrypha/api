@@ -7,7 +7,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func requestLogger(logger *zap.Logger) func(http.Handler) http.Handler {
+func injectLogger(logger *zap.Logger) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		fn := func(w http.ResponseWriter, r *http.Request) {
 			ctx := ctxlog.WithLogger(r.Context(), logger)
@@ -28,6 +28,18 @@ func recoverer(next http.Handler) http.Handler {
 				respond(w, r, http.StatusInternalServerError, http.StatusText(http.StatusInternalServerError))
 			}
 		}()
+
+		next.ServeHTTP(w, r)
+	})
+}
+
+func requestLogger(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		ctxlog.Debug(r.Context(), "request",
+			zap.String("method", r.Method),
+			zap.String("url", r.RequestURI),
+			zap.String("protocol", r.Proto),
+		)
 
 		next.ServeHTTP(w, r)
 	})
