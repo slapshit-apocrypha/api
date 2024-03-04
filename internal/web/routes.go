@@ -14,6 +14,7 @@ type djApplication struct {
 	PreferredDay string `json:"preferred_day"`
 	Experience   bool   `json:"experience"`
 	Genre        string `json:"genre"`
+	Pronouns     string `json:"pronouns"`
 }
 
 func (s *Server) postSendWebhook(w http.ResponseWriter, r *http.Request) {

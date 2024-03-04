@@ -17,7 +17,7 @@ func createDJEmbed(req *djApplication) discord.Embed {
 
 	e.Fields = append(e.Fields,
 		discord.EmbedField{
-			Name:   "Name",
+			Name:   "DJ Name",
 			Value:  req.Name,
 			Inline: false,
 		},
@@ -39,6 +39,11 @@ func createDJEmbed(req *djApplication) discord.Embed {
 		discord.EmbedField{
 			Name:   "Genre(s)",
 			Value:  req.Genre,
+			Inline: false,
+		},
+		discord.EmbedField{
+			Name:   "Pronouns",
+			Value:  req.Pronouns,
 			Inline: false,
 		},
 	)
